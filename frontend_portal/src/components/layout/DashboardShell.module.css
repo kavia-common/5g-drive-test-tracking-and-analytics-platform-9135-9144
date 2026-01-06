@@ -101,6 +101,16 @@
   transform: translateY(-1px);
 }
 
+.navItemActive {
+  background: rgba(37, 99, 235, 0.12);
+  border-color: rgba(37, 99, 235, 0.22);
+  box-shadow: var(--op-shadow-sm);
+}
+
+.navItemActive .navDot {
+  background: rgba(37, 99, 235, 0.85);
+}
+
 .sidebarBottom {
   margin-top: auto;
   padding: 8px;
@@ -198,6 +208,25 @@
 .headerPills {
   display: flex;
   gap: 8px;
+}
+
+.roleControl {
+  display: inline-flex;
+  align-items: center;
+}
+
+.roleSelect {
+  height: 36px;
+  border-radius: 12px;
+  padding: 0 10px;
+  border: 1px solid var(--op-border);
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--op-shadow-sm);
+  color: var(--op-text);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
 }
 
 /* Content area */

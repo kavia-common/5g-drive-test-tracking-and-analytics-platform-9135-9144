@@ -1,16 +1,20 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { NavLink } from "react-router-dom";
 import styles from "./DashboardShell.module.css";
 import Button from "../ui/Button";
 import Badge from "../ui/Badge";
 import Card from "../ui/Card";
+import { useRole } from "../../context/RoleContext";
 
 /**
  * PUBLIC_INTERFACE
  * DashboardShell provides the main app frame: left sidebar navigation,
  * top header/status bar, and a content workspace area.
  *
- * This component is intentionally "routing-ready": it renders `children` inside
- * the content area, and exposes a placeholder navigation list.
+ * This component is routing-aware:
+ * - uses NavLink for SPA navigation
+ * - highlights the active route
+ * - hides nav items the current role should not see
  *
  * @param {{
  *  title?: string,
@@ -20,15 +24,16 @@ import Card from "../ui/Card";
  */
 export default function DashboardShell({ title = "Ocean Professional", children }) {
   const [sidebarOpenMobile, setSidebarOpenMobile] = useState(false);
+  const { role, setRole, hasAnyRole } = useRole();
 
   const navItems = useMemo(
     () => [
-      { key: "overview", label: "Overview" },
-      { key: "Live Map", label: "Live Map" },
-      { key: "Analytics", label: "Analytics" },
-      { key: "Uploads", label: "Log Uploads" },
-      { key: "Reports", label: "Reports" },
-      { key: "Settings", label: "Settings" },
+      { key: "live", label: "Live Tracking", to: "/live", roles: ["viewer", "operator", "admin"] },
+      { key: "analytics", label: "Analytics", to: "/analytics", roles: ["viewer", "operator", "admin"] },
+      { key: "upload", label: "Upload Logs", to: "/upload", roles: ["operator", "admin"] },
+      { key: "compliance", label: "Compliance", to: "/compliance", roles: ["viewer", "operator", "admin"] },
+      { key: "reports", label: "Reports", to: "/reports", roles: ["viewer", "operator", "admin"] },
+      { key: "settings", label: "Settings", to: "/settings", roles: ["operator", "admin"] },
     ],
     []
   );
@@ -43,6 +48,15 @@ export default function DashboardShell({ title = "Ocean Professional", children 
   }, []);
 
   const closeMobile = () => setSidebarOpenMobile(false);
+
+  /**
+   * @param {React.ChangeEvent<HTMLSelectElement>} e
+   */
+  const onRoleChange = (e) => {
+    setRole(/** @type {"viewer" | "operator" | "admin"} */ (e.target.value));
+  };
+
+  const visibleNavItems = navItems.filter((item) => hasAnyRole(item.roles));
 
   return (
     <div className={styles.shell}>
@@ -81,20 +95,23 @@ export default function DashboardShell({ title = "Ocean Professional", children 
         </div>
 
         <nav className={styles.nav}>
-          {navItems.map((item) => (
-            <a
+          {visibleNavItems.map((item) => (
+            <NavLink
               key={item.key}
-              href="#"
-              className={styles.navItem}
-              onClick={(e) => {
-                e.preventDefault();
-                // Placeholder until routing is added.
+              to={item.to}
+              className={({ isActive }) =>
+                [styles.navItem, isActive ? styles.navItemActive : ""]
+                  .filter(Boolean)
+                  .join(" ")
+              }
+              onClick={() => {
                 setSidebarOpenMobile(false);
               }}
+              end={item.to === "/live"}
             >
               <span className={styles.navDot} aria-hidden="true" />
               {item.label}
-            </a>
+            </NavLink>
           ))}
         </nav>
 
@@ -106,7 +123,7 @@ export default function DashboardShell({ title = "Ocean Professional", children 
             </div>
             <div className={styles.sidebarCardRow}>
               <span className={styles.sidebarCardLabel}>Role</span>
-              <Badge>Operator</Badge>
+              <Badge>{role}</Badge>
             </div>
           </Card>
         </div>
@@ -142,6 +159,20 @@ export default function DashboardShell({ title = "Ocean Professional", children 
               <Badge tone="primary">Online</Badge>
               <Badge tone="secondary">5G</Badge>
             </div>
+
+            <label className={styles.roleControl}>
+              <span className="srOnly">Role</span>
+              <select
+                className={styles.roleSelect}
+                value={role}
+                onChange={onRoleChange}
+                aria-label="Demo role switcher"
+              >
+                <option value="viewer">viewer</option>
+                <option value="operator">operator</option>
+                <option value="admin">admin</option>
+              </select>
+            </label>
 
             <button className="op-iconButton" aria-label="Notifications">
               <span aria-hidden="true">🔔</span>

@@ -1,12 +1,28 @@
 import React, { useEffect } from "react";
 import "./App.css";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { config, getPublicConfigSnapshot, logger } from "./config";
 import DashboardShell from "./components/layout/DashboardShell";
-import Card from "./components/ui/Card";
-import Button from "./components/ui/Button";
-import Badge from "./components/ui/Badge";
+import { RoleProvider } from "./context/RoleContext";
+import RequireRole from "./components/auth/RequireRole";
 
-// PUBLIC_INTERFACE
+import LiveTrackingPage from "./pages/LiveTrackingPage";
+import AnalyticsPage from "./pages/AnalyticsPage";
+import UploadPage from "./pages/UploadPage";
+import CompliancePage from "./pages/CompliancePage";
+import ReportsPage from "./pages/ReportsPage";
+import SettingsPage from "./pages/SettingsPage";
+import NotFoundPage from "./pages/NotFoundPage";
+
+/**
+ * PUBLIC_INTERFACE
+ * App is the main SPA entrypoint. It wires:
+ * - RoleProvider (demo RBAC)
+ * - React Router routes
+ * - DashboardShell layout
+ *
+ * @returns {JSX.Element}
+ */
 function App() {
   // Initialize runtime config once (module initialization happens on import).
   // Keep logging non-noisy: a single info log outside production.
@@ -19,58 +35,56 @@ function App() {
 
   return (
     <div className="App">
-      <DashboardShell title="Operations Dashboard">
-        <div className="pageGrid">
-          <Card className="panel">
-            <div className="panelHeader">
-              <div>
-                <div className="panelTitle">Welcome</div>
-                <div className="panelSub op-muted">
-                  App shell is ready. Next step: add routed pages.
-                </div>
-              </div>
-              <Badge tone="primary">Ocean Professional</Badge>
-            </div>
+      <RoleProvider>
+        <BrowserRouter>
+          <DashboardShell title="Operations Dashboard">
+            <Routes>
+              <Route path="/" element={<Navigate to="/live" replace />} />
 
-            <div className="panelBody">
-              <p className="op-muted" style={{ marginTop: 0 }}>
-                Backend base:
-                <br />
-                <code className="inlineCode">{config.backendUrl}</code>
-              </p>
+              <Route path="/live" element={<LiveTrackingPage />} />
+              <Route path="/analytics" element={<AnalyticsPage />} />
 
-              <div className="panelActions">
-                <Button variant="primary">Create Session</Button>
-                <Button variant="secondary">Upload Logs</Button>
-                <Button variant="ghost">View Reports</Button>
-              </div>
-            </div>
-          </Card>
+              <Route
+                path="/upload"
+                element={
+                  <RequireRole allow={["operator", "admin"]}>
+                    <UploadPage />
+                  </RequireRole>
+                }
+              />
 
-          <Card className="panel">
-            <div className="panelHeader">
-              <div>
-                <div className="panelTitle">Workspace</div>
-                <div className="panelSub op-muted">
-                  Map, analytics, and route progress panels will render here.
-                </div>
-              </div>
-              <Badge tone="secondary">Placeholder</Badge>
-            </div>
+              <Route
+                path="/compliance"
+                element={
+                  <RequireRole allow={["viewer", "operator", "admin"]}>
+                    <CompliancePage />
+                  </RequireRole>
+                }
+              />
 
-            <div className="panelBody">
-              <div className="placeholderArea" role="img" aria-label="Map placeholder">
-                <div className="placeholderInner">
-                  <div className="placeholderTitle">Main Content Area</div>
-                  <div className="placeholderSub op-muted">
-                    Ready for real-time map and analytics components.
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Card>
-        </div>
-      </DashboardShell>
+              <Route
+                path="/reports"
+                element={
+                  <RequireRole allow={["viewer", "operator", "admin"]}>
+                    <ReportsPage />
+                  </RequireRole>
+                }
+              />
+
+              <Route
+                path="/settings"
+                element={
+                  <RequireRole allow={["operator", "admin"]}>
+                    <SettingsPage />
+                  </RequireRole>
+                }
+              />
+
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </DashboardShell>
+        </BrowserRouter>
+      </RoleProvider>
     </div>
   );
 }
