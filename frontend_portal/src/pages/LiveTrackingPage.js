@@ -378,7 +378,8 @@ export default function LiveTrackingPage() {
     return [{ value: "all", label: "All regions" }, ...opts];
   }, [regions]);
 
-  const viewport = { width: 920, height: 520 };
+  // Memoized so it can be safely used as a dependency (CI treats ESLint warnings as errors).
+  const viewport = useMemo(() => ({ width: 920, height: 520 }), []);
 
   const regionTiles = useMemo(() => {
     // Visual placeholder: create 3 region "zones" regardless of exact list length.
