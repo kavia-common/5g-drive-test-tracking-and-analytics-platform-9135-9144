@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import "./App.css";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { config, getPublicConfigSnapshot, logger } from "./config";
+import { dataService } from "./services";
 import DashboardShell from "./components/layout/DashboardShell";
 import { RoleProvider } from "./context/RoleContext";
 import RequireRole from "./components/auth/RequireRole";
@@ -30,6 +31,36 @@ function App() {
     if (config.nodeEnv !== "production") {
       logger.info("[config]", getPublicConfigSnapshot());
     }
+
+    // Minimal wiring for step 04:
+    // - Ensure the selected provider is active and visible in logs.
+    // - Do a tiny smoke fetch to validate the data layer (non-blocking for UI).
+    // - Optionally subscribe to device updates in development.
+    logger.info("[data] active", { mode: dataService.mode });
+
+    dataService
+      .getRegions()
+      .then((regions) => {
+        if (config.nodeEnv !== "production") {
+          logger.debug("[data] regions", { count: Array.isArray(regions) ? regions.length : undefined });
+        }
+      })
+      .catch((e) => {
+        logger.warn("[data] getRegions failed", e);
+      });
+
+    let unsubscribed = false;
+    if (config.nodeEnv !== "production") {
+      dataService.subscribeToDeviceUpdates((evt) => {
+        if (unsubscribed) return;
+        logger.debug("[data] device update", evt);
+      });
+    }
+
+    return () => {
+      unsubscribed = true;
+      dataService.unsubscribe();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
