@@ -1,0 +1,395 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.topRow {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 14px;
+  align-items: start;
+}
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.kpiCard {
+  padding: 14px 14px 12px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(37, 99, 235, 0.08), rgba(255, 255, 255, 1));
+}
+
+.kpiHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.kpiLabel {
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  color: #111827;
+  font-size: 13px;
+}
+
+.kpiValue {
+  margin-top: 10px;
+  font-weight: 950;
+  letter-spacing: -0.03em;
+  font-size: 32px;
+  line-height: 1.05;
+  color: #111827;
+}
+
+.kpiSub {
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(17, 24, 39, 0.62);
+  line-height: 1.35;
+}
+
+.topActions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.metaPills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.actionRow {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.liveLink {
+  font-size: 12px;
+  font-weight: 900;
+  text-decoration: none;
+  color: #2563eb;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: rgba(37, 99, 235, 0.08);
+  border: 1px solid rgba(37, 99, 235, 0.15);
+}
+
+.liveLink:hover {
+  background: rgba(37, 99, 235, 0.12);
+}
+
+.regionStrip {
+  padding: 12px;
+  border-radius: 16px;
+}
+
+.regionStripHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.sectionTitle {
+  font-weight: 950;
+  letter-spacing: -0.02em;
+  color: #111827;
+}
+
+.sectionSub {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(17, 24, 39, 0.62);
+}
+
+.regionChips {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.regionChip {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(17, 24, 39, 0.03);
+  border: 1px solid rgba(17, 24, 39, 0.07);
+  min-width: 180px;
+}
+
+.regionName {
+  font-weight: 950;
+  letter-spacing: -0.01em;
+}
+
+.regionMetrics {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(17, 24, 39, 0.70);
+}
+
+.regionMetric strong {
+  color: #111827;
+}
+
+.mainSplit {
+  display: grid;
+  grid-template-columns: 0.95fr 1.35fr;
+  gap: 12px;
+  align-items: start;
+}
+
+.mapCard,
+.listCard {
+  border-radius: 16px;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 14px 10px;
+}
+
+.mapSurface {
+  position: relative;
+  padding: 0 14px 14px;
+}
+
+.mapSvg {
+  width: 100%;
+  height: 280px;
+  border-radius: 16px;
+  background: #ffffff;
+  border: 1px solid rgba(17, 24, 39, 0.06);
+}
+
+.mapLegend {
+  margin-top: 10px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  color: rgba(17, 24, 39, 0.70);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.legendRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legendSwatch {
+  width: 16px;
+  height: 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(17, 24, 39, 0.10);
+}
+
+.legendSwatchOn {
+  background: rgba(37, 99, 235, 0.55);
+}
+
+.legendSwatchOff {
+  background: rgba(239, 68, 68, 0.55);
+}
+
+.mapFooter,
+.cardFooter {
+  padding: 0 14px 14px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.secondaryLink {
+  font-size: 12px;
+  font-weight: 900;
+  text-decoration: none;
+  color: rgba(17, 24, 39, 0.78);
+}
+
+.secondaryLink:hover {
+  color: #111827;
+}
+
+.mutedTiny {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(17, 24, 39, 0.55);
+}
+
+.tableWrap {
+  padding: 0 14px 14px;
+  overflow: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 820px;
+}
+
+.table thead th {
+  position: sticky;
+  top: 0;
+  background: rgba(249, 250, 251, 0.92);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(17, 24, 39, 0.08);
+  padding: 10px 10px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 950;
+  color: rgba(17, 24, 39, 0.78);
+  white-space: nowrap;
+}
+
+.table tbody td {
+  padding: 12px 10px;
+  border-bottom: 1px solid rgba(17, 24, 39, 0.06);
+  vertical-align: middle;
+  font-size: 13px;
+  font-weight: 800;
+  color: rgba(17, 24, 39, 0.86);
+  white-space: nowrap;
+}
+
+.cellDriver {
+  min-width: 210px;
+}
+
+.driverName {
+  font-weight: 950;
+  letter-spacing: -0.01em;
+  color: #111827;
+}
+
+.driverSub {
+  margin-top: 3px;
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(17, 24, 39, 0.58);
+}
+
+.statusStack {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-start;
+}
+
+.smallMuted {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(17, 24, 39, 0.58);
+}
+
+.progressCell {
+  min-width: 170px;
+}
+
+.progressTop {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.progressValue {
+  font-weight: 950;
+  letter-spacing: -0.01em;
+  color: #111827;
+}
+
+.progressTiny {
+  font-size: 12px;
+  font-weight: 800;
+  color: rgba(17, 24, 39, 0.58);
+}
+
+.progressBar {
+  margin-top: 8px;
+  height: 8px;
+  background: rgba(17, 24, 39, 0.06);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progressFill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(37, 99, 235, 0.88), rgba(245, 158, 11, 0.88));
+  transition: width 220ms ease;
+}
+
+.cellRoute {
+  max-width: 240px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cellLastSeen {
+  color: rgba(17, 24, 39, 0.62);
+}
+
+/* Responsive behavior:
+   - KPIs stack into 2 columns then 1
+   - Main split stacks; on small screens, mini map hidden unless toggled */
+@media (max-width: 1100px) {
+  .kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mainSplit {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .topRow {
+    grid-template-columns: 1fr;
+  }
+
+  .topActions {
+    align-items: flex-start;
+  }
+
+  .kpis {
+    grid-template-columns: 1fr;
+  }
+
+  .kpiValue {
+    font-size: 30px;
+  }
+
+  .mapCardHiddenMobile {
+    display: none;
+  }
+
+  .mapCardVisibleMobile {
+    display: block;
+  }
+}

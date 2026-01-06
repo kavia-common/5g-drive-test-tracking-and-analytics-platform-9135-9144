@@ -7,6 +7,7 @@ import DashboardShell from "./components/layout/DashboardShell";
 import { RoleProvider } from "./context/RoleContext";
 import RequireRole from "./components/auth/RequireRole";
 
+import DashboardHome from "./pages/DashboardHome";
 import LiveTrackingPage from "./pages/LiveTrackingPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import UploadPage from "./pages/UploadPage";
@@ -70,7 +71,7 @@ function App() {
         <BrowserRouter>
           <DashboardShell title="Operations Dashboard">
             <Routes>
-              <Route path="/" element={<Navigate to="/live" replace />} />
+              <Route path="/" element={<DashboardHome />} />
 
               <Route path="/live" element={<LiveTrackingPage />} />
               <Route path="/analytics" element={<AnalyticsPage />} />
