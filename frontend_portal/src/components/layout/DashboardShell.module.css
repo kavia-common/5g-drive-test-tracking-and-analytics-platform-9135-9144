@@ -1,0 +1,264 @@
+.shell {
+  display: grid;
+  grid-template-columns: var(--op-sidebar-width) 1fr;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  background: linear-gradient(180deg, rgba(37, 99, 235, 0.10), rgba(255, 255, 255, 0.92));
+  border-right: 1px solid var(--op-border);
+  padding: 16px;
+  overflow: auto;
+}
+
+.sidebarTop {
+  padding: 8px 8px 14px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brandMark {
+  height: 44px;
+  width: 44px;
+  border-radius: 16px;
+  background: var(--op-primary);
+  color: #fff;
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+  box-shadow: var(--op-shadow);
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.brandName {
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.brandSub {
+  color: var(--op-text-muted);
+  font-size: 12px;
+}
+
+.sidebarMeta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  color: var(--op-text-muted);
+  font-size: 13px;
+}
+
+.sidebarMetaText {
+  white-space: nowrap;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 8px;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 10px;
+  border-radius: 14px;
+  color: var(--op-text);
+  border: 1px solid transparent;
+  transition: background var(--op-transition), transform var(--op-transition),
+    box-shadow var(--op-transition), border-color var(--op-transition);
+}
+
+.navDot {
+  height: 8px;
+  width: 8px;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.35);
+}
+
+.navItem:hover {
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.75);
+  border-color: var(--op-border);
+  box-shadow: var(--op-shadow-sm);
+  transform: translateY(-1px);
+}
+
+.sidebarBottom {
+  margin-top: auto;
+  padding: 8px;
+}
+
+.sidebarCard {
+  padding: 12px;
+}
+
+.sidebarCardRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 2px;
+}
+
+.sidebarCardLabel {
+  color: var(--op-text-muted);
+  font-size: 13px;
+}
+
+/* Main */
+.main {
+  display: grid;
+  grid-template-rows: var(--op-header-height) 1fr;
+  min-width: 0;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: var(--op-header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 18px;
+  background: rgba(249, 250, 251, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--op-border);
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.menuButton {
+  display: none; /* shown only on mobile */
+}
+
+.hamburger {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hamburger > span {
+  display: block;
+  width: 16px;
+  height: 2px;
+  background: var(--op-text);
+  border-radius: 999px;
+}
+
+.headerTitleGroup {
+  min-width: 0;
+}
+
+.headerTitle {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.headerSubtitle {
+  font-size: 12px;
+  color: var(--op-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.headerPills {
+  display: flex;
+  gap: 8px;
+}
+
+/* Content area */
+.content {
+  padding: 18px;
+  min-width: 0;
+}
+
+.overlay {
+  display: none;
+}
+
+/* Responsive: collapse sidebar into off-canvas drawer */
+@media (max-width: 980px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: var(--op-sidebar-width);
+    transform: translateX(-110%);
+    transition: transform var(--op-transition);
+    z-index: 30;
+  }
+
+  .sidebarOpenMobile {
+    transform: translateX(0);
+  }
+
+  .menuButton {
+    display: inline-flex;
+  }
+
+  .overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(17, 24, 39, 0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--op-transition);
+    z-index: 25;
+  }
+
+  .overlayVisible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* Tighter header on small phones */
+@media (max-width: 520px) {
+  .headerPills {
+    display: none;
+  }
+
+  .content {
+    padding: 14px;
+  }
+}

@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
-import logo from "./logo.svg";
+import React, { useEffect } from "react";
 import "./App.css";
 import { config, getPublicConfigSnapshot, logger } from "./config";
+import DashboardShell from "./components/layout/DashboardShell";
+import Card from "./components/ui/Card";
+import Button from "./components/ui/Button";
+import Badge from "./components/ui/Badge";
 
 // PUBLIC_INTERFACE
 function App() {
-  const [theme, setTheme] = useState("light");
-
   // Initialize runtime config once (module initialization happens on import).
   // Keep logging non-noisy: a single info log outside production.
   useEffect(() => {
@@ -16,51 +17,60 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Effect to apply theme to document element
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-  }, [theme]);
-
-  // PUBLIC_INTERFACE
-  const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
-  };
-
-  // Note: routing/layout will be introduced in the next steps; for now we keep a single root.
   return (
     <div className="App">
-      <header className="App-header">
-        <button
-          className="theme-toggle"
-          onClick={toggleTheme}
-          aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
-        >
-          {theme === "light" ? "🌙 Dark" : "☀️ Light"}
-        </button>
+      <DashboardShell title="Operations Dashboard">
+        <div className="pageGrid">
+          <Card className="panel">
+            <div className="panelHeader">
+              <div>
+                <div className="panelTitle">Welcome</div>
+                <div className="panelSub op-muted">
+                  App shell is ready. Next step: add routed pages.
+                </div>
+              </div>
+              <Badge tone="primary">Ocean Professional</Badge>
+            </div>
 
-        <img src={logo} className="App-logo" alt="logo" />
+            <div className="panelBody">
+              <p className="op-muted" style={{ marginTop: 0 }}>
+                Backend base:
+                <br />
+                <code className="inlineCode">{config.backendUrl}</code>
+              </p>
 
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
+              <div className="panelActions">
+                <Button variant="primary">Create Session</Button>
+                <Button variant="secondary">Upload Logs</Button>
+                <Button variant="ghost">View Reports</Button>
+              </div>
+            </div>
+          </Card>
 
-        <p>
-          Current theme: <strong>{theme}</strong>
-        </p>
+          <Card className="panel">
+            <div className="panelHeader">
+              <div>
+                <div className="panelTitle">Workspace</div>
+                <div className="panelSub op-muted">
+                  Map, analytics, and route progress panels will render here.
+                </div>
+              </div>
+              <Badge tone="secondary">Placeholder</Badge>
+            </div>
 
-        <p style={{ fontSize: "0.9em", opacity: 0.8 }}>
-          API: <code>{config.apiBase}</code>
-        </p>
-
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+            <div className="panelBody">
+              <div className="placeholderArea" role="img" aria-label="Map placeholder">
+                <div className="placeholderInner">
+                  <div className="placeholderTitle">Main Content Area</div>
+                  <div className="placeholderSub op-muted">
+                    Ready for real-time map and analytics components.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Card>
+        </div>
+      </DashboardShell>
     </div>
   );
 }

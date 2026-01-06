@@ -1,13 +1,132 @@
+/* Ocean Professional base styles (global) */
+:root {
+  /* Brand */
+  --op-primary: #2563eb;
+  --op-secondary: #f59e0b;
+
+  /* Neutrals */
+  --op-bg: #f9fafb;
+  --op-surface: #ffffff;
+  --op-text: #111827;
+  --op-text-muted: #6b7280;
+  --op-border: rgba(17, 24, 39, 0.10);
+
+  /* Semantic */
+  --op-danger: #ef4444;
+  --op-success: #10b981;
+  --op-warning: #f59e0b;
+
+  /* Effects */
+  --op-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --op-shadow: 0 8px 24px rgba(17, 24, 39, 0.08);
+  --op-shadow-lg: 0 16px 48px rgba(17, 24, 39, 0.14);
+
+  /* Shape */
+  --op-radius-sm: 10px;
+  --op-radius: 14px;
+  --op-radius-lg: 18px;
+
+  /* Layout */
+  --op-sidebar-width: 264px;
+  --op-header-height: 64px;
+
+  /* Motion */
+  --op-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --op-transition: 180ms var(--op-ease);
+}
+
+/* Prefer-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --op-transition: 0ms;
+  }
+}
+
+/* Reset / base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    "Apple Color Emoji", "Segoe UI Emoji";
+  color: var(--op-text);
+  background: var(--op-bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Accessible focus ring */
+:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.35);
+  outline-offset: 2px;
+  border-radius: 10px;
+}
+
+/* Links */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Generic utility classes */
+.op-muted {
+  color: var(--op-text-muted);
+}
+
+.op-divider {
+  height: 1px;
+  background: var(--op-border);
+}
+
+/* Simple icon-button base used by header actions */
+.op-iconButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  width: 36px;
+  border-radius: 12px;
+  border: 1px solid var(--op-border);
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: transform var(--op-transition), box-shadow var(--op-transition),
+    background var(--op-transition);
+  box-shadow: var(--op-shadow-sm);
+}
+
+.op-iconButton:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--op-shadow);
+}
+
+.op-iconButton:active {
+  transform: translateY(0px);
+}
+
+/* Screen-reader only text */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
