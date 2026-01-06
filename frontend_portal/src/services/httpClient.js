@@ -338,7 +338,7 @@ export function createRestClient(opts = {}) {
    * @returns {Promise<T>}
    */
   async function uploadFormData(path, formData, options = {}) {
-    const { headers = {}, ...rest } = options;
+    const { headers = {} } = options;
     const url = joinUrl(baseUrl, path) + toQueryString(options.query);
 
     try {

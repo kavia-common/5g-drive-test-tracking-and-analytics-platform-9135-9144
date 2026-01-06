@@ -5,6 +5,7 @@ import Button from "../components/ui/Button";
 import styles from "./LiveTrackingPage.module.css";
 import { dataService } from "../services";
 import { logger } from "../config";
+import { EmptyState, ErrorState, LoadingState } from "../components/ui/States";
 
 /**
  * @typedef {{
@@ -398,7 +399,7 @@ export default function LiveTrackingPage() {
     return coords
       .map((c, idx) => `${idx === 0 ? "M" : "L"} ${c.x.toFixed(1)} ${c.y.toFixed(1)}`)
       .join(" ");
-  }, [breadcrumbsByDevice, selectedDeviceId]);
+  }, [breadcrumbsByDevice, selectedDeviceId, viewport]);
 
   const deviceMarkers = useMemo(() => {
     // Render only filtered set to match the list.
@@ -408,7 +409,7 @@ export default function LiveTrackingPage() {
         const pt = projectLatLng(/** @type {number} */ (d.lat), /** @type {number} */ (d.lng), viewport);
         return { id: d.id, x: pt.x, y: pt.y, status: normalizeOnlineStatus(d) };
       });
-  }, [filteredDevices]);
+  }, [filteredDevices, viewport]);
 
   const onSelectDevice = (id) => setSelectedDeviceId(id);
 
@@ -482,30 +483,28 @@ export default function LiveTrackingPage() {
           </div>
 
           <div className={styles.panelBody}>
-            {loading ? (
-              <div className={styles.loadingBox}>
-                <div style={{ fontWeight: 900 }}>Loading…</div>
-                <div className={styles.smallMuted}>Fetching regions and devices.</div>
-              </div>
-            ) : error ? (
-              <div className={styles.errorBox}>
-                <div style={{ fontWeight: 900 }}>Could not load live data</div>
-                <div className={styles.smallMuted} style={{ marginTop: 6 }}>
-                  {error.message}
-                </div>
-                <div style={{ marginTop: 12, display: "flex", gap: 10, flexWrap: "wrap" }}>
-                  <Button variant="primary" size="sm" onClick={() => refreshDevices({ silent: false })}>
-                    Retry devices
-                  </Button>
-                </div>
-              </div>
+            {error ? (
+              <ErrorState
+                title="Could not load live data"
+                message="We couldn’t fetch regions/devices or the data provider is unavailable."
+                details={error.message}
+                onAction={() => refreshDevices({ silent: false })}
+                actionLabel="Retry devices"
+                inline
+              />
+            ) : loading ? (
+              <LoadingState title="Loading…" message="Fetching regions and devices." inline />
             ) : filteredDevices.length === 0 ? (
-              <div className={styles.emptyBox}>
-                <div style={{ fontWeight: 900 }}>No devices</div>
-                <div className={styles.smallMuted} style={{ marginTop: 6 }}>
-                  Try selecting a different region or clearing the search.
-                </div>
-              </div>
+              <EmptyState
+                title="No devices"
+                message="Try selecting a different region or clearing the search."
+                onAction={() => {
+                  setRegionFilter("all");
+                  setSearch("");
+                }}
+                actionLabel="Clear filters"
+                inline
+              />
             ) : (
               <div className={styles.list} role="list" aria-label="Device list">
                 {filteredDevices.map((d) => {
@@ -581,12 +580,11 @@ export default function LiveTrackingPage() {
 
           <div className={styles.drawerBody}>
             {!selectedDevice ? (
-              <div className={styles.emptyBox}>
-                <div style={{ fontWeight: 900 }}>No device selected</div>
-                <div className={styles.smallMuted} style={{ marginTop: 6 }}>
-                  Click a device in the list to see its status, last fix, and recent breadcrumb points.
-                </div>
-              </div>
+              <EmptyState
+                title="No device selected"
+                message="Click a device in the list to see its status, last fix, and recent breadcrumb points."
+                inline
+              />
             ) : (
               <>
                 <div className={styles.detailGrid}>
@@ -624,7 +622,7 @@ export default function LiveTrackingPage() {
                   <div className={styles.detailItem}>
                     <div className={styles.detailLabel}>Battery</div>
                     <div className={styles.detailValue}>
-                      typeof selectedDevice.batteryPct === "number" ? `${Math.round(selectedDevice.batteryPct)}%` : "—"
+                      {typeof selectedDevice.batteryPct === "number" ? `${Math.round(selectedDevice.batteryPct)}%` : "—"}
                     </div>
                   </div>
                 </div>
@@ -636,12 +634,7 @@ export default function LiveTrackingPage() {
                   </div>
                   <div className={styles.breadcrumbs} style={{ marginTop: 10 }}>
                     {selectedBreadcrumbs.length === 0 ? (
-                      <div className={styles.emptyBox}>
-                        <div style={{ fontWeight: 900 }}>No points yet</div>
-                        <div className={styles.smallMuted} style={{ marginTop: 6 }}>
-                          Waiting for location updates for this device.
-                        </div>
-                      </div>
+                      <EmptyState title="No points yet" message="Waiting for location updates for this device." inline />
                     ) : (
                       selectedBreadcrumbs
                         .slice()

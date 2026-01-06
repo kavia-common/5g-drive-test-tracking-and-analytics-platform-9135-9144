@@ -1,0 +1,225 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.panel {
+  padding: 16px;
+}
+
+.headerRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+}
+
+.subtitle {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--op-text-muted);
+}
+
+.panelBody {
+  padding-top: 14px;
+}
+
+.controlsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+.controlsLeft {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+}
+
+.select {
+  height: 36px;
+  border-radius: 12px;
+  padding: 0 12px;
+  border: 1px solid var(--op-border);
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: var(--op-shadow-sm);
+  color: var(--op-text);
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.tilesGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.tile {
+  padding: 14px;
+  border-radius: var(--op-radius-lg);
+  border: 1px solid var(--op-border);
+  background: rgba(255, 255, 255, 0.70);
+  box-shadow: var(--op-shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tileTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.tileName {
+  font-weight: 1000;
+  letter-spacing: -0.02em;
+}
+
+.tileMeta {
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 650;
+  color: var(--op-text-muted);
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.scoreRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.scoreValue {
+  font-size: 22px;
+  font-weight: 1000;
+  letter-spacing: -0.03em;
+}
+
+.bar {
+  height: 12px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(17, 24, 39, 0.08);
+  border: 1px solid rgba(17, 24, 39, 0.08);
+}
+
+.barFillGood {
+  height: 100%;
+  background: linear-gradient(90deg, rgba(37, 99, 235, 0.95), rgba(16, 185, 129, 0.78));
+}
+
+.barFillWarn {
+  height: 100%;
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.95), rgba(37, 99, 235, 0.55));
+}
+
+.barFillFail {
+  height: 100%;
+  background: linear-gradient(90deg, rgba(239, 68, 68, 0.95), rgba(245, 158, 11, 0.65));
+}
+
+.checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.checkRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px;
+  border-radius: 14px;
+  border: 1px solid rgba(17, 24, 39, 0.10);
+  background: rgba(249, 250, 251, 0.75);
+}
+
+.checkLeft {
+  min-width: 0;
+}
+
+.checkTitle {
+  font-weight: 900;
+  letter-spacing: -0.01em;
+}
+
+.checkSub {
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 650;
+  color: var(--op-text-muted);
+}
+
+.smallMuted {
+  font-size: 12px;
+  font-weight: 650;
+  color: var(--op-text-muted);
+}
+
+.exceptionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.exceptionRow {
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid var(--op-border);
+  background: rgba(255, 255, 255, 0.70);
+  box-shadow: var(--op-shadow-sm);
+}
+
+.exceptionTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.exceptionTitle {
+  font-weight: 900;
+  letter-spacing: -0.01em;
+}
+
+@media (min-width: 980px) {
+  .grid2 {
+    grid-template-columns: 1.15fr 0.85fr;
+  }
+
+  .tilesGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .controlsLeft {
+    width: 100%;
+  }
+}
