@@ -1,0 +1,4 @@
+{
+    "command": "npm install && npx tsc --noEmit && npm test -- --ci",
+    "working_directory": "/home/kavia/workspace/code-generation/5g-drive-test-tracking-and-analytics-platform-9135-9144/frontend_portal"
+}
