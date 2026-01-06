@@ -205,6 +205,29 @@
   gap: 10px;
 }
 
+.notifButton {
+  position: relative;
+}
+
+.notifDot {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 6px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  color: #111827;
+  background: rgba(245, 158, 11, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: var(--op-shadow-sm);
+}
+
 .headerPills {
   display: flex;
   gap: 8px;

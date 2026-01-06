@@ -5,6 +5,7 @@ import Button from "../ui/Button";
 import Badge from "../ui/Badge";
 import Card from "../ui/Card";
 import { useRole } from "../../context/RoleContext";
+import NotificationsPanel from "../notifications/NotificationsPanel";
 
 /**
  * PUBLIC_INTERFACE
@@ -24,6 +25,10 @@ import { useRole } from "../../context/RoleContext";
  */
 export default function DashboardShell({ title = "Ocean Professional", children }) {
   const [sidebarOpenMobile, setSidebarOpenMobile] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
+  // Lightweight unread indicator; can be wired to backend alerts later.
+  const [unreadCount, setUnreadCount] = useState(3);
+
   const { role, setRole, hasAnyRole } = useRole();
 
   const navItems = useMemo(
@@ -174,8 +179,23 @@ export default function DashboardShell({ title = "Ocean Professional", children 
               </select>
             </label>
 
-            <button className="op-iconButton" aria-label="Notifications">
+            <button
+              id="op-header-notifications"
+              className={[styles.notifButton, "op-iconButton"].join(" ")}
+              aria-label="Notifications"
+              aria-haspopup="dialog"
+              aria-expanded={notificationsOpen}
+              onClick={() => {
+                setNotificationsOpen((v) => !v);
+                if (!notificationsOpen) setUnreadCount(0);
+              }}
+            >
               <span aria-hidden="true">🔔</span>
+              {unreadCount > 0 ? (
+                <span className={styles.notifDot} aria-label={`${unreadCount} unread notifications`}>
+                  {unreadCount > 9 ? "9+" : unreadCount}
+                </span>
+              ) : null}
             </button>
 
             <button className="op-iconButton" aria-label="User profile">
@@ -191,6 +211,8 @@ export default function DashboardShell({ title = "Ocean Professional", children 
         <main className={styles.content} role="main">
           {children}
         </main>
+
+        <NotificationsPanel open={notificationsOpen} onClose={() => setNotificationsOpen(false)} />
       </div>
     </div>
   );

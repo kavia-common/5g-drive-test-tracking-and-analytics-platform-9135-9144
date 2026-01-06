@@ -1,0 +1,96 @@
+.cardWrap {
+  padding: 14px;
+}
+
+.inlineWrap {
+  border-radius: var(--op-radius-lg);
+  border: 1px solid var(--op-border);
+  background: rgba(255, 255, 255, 0.70);
+  padding: 12px;
+}
+
+.state {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(17, 24, 39, 0.10);
+  background: linear-gradient(180deg, rgba(37, 99, 235, 0.08), rgba(255, 255, 255, 0.86));
+  box-shadow: var(--op-shadow-sm);
+  padding: 14px;
+}
+
+.error {
+  background: linear-gradient(180deg, rgba(239, 68, 68, 0.08), rgba(255, 255, 255, 0.90));
+  border-color: rgba(239, 68, 68, 0.22);
+}
+
+.icon {
+  height: 40px;
+  width: 40px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: rgba(17, 24, 39, 0.06);
+  border: 1px solid rgba(17, 24, 39, 0.10);
+  flex: 0 0 auto;
+}
+
+.body {
+  min-width: 0;
+}
+
+.title {
+  font-weight: 900;
+  letter-spacing: -0.01em;
+}
+
+.message {
+  margin-top: 4px;
+  color: var(--op-text-muted);
+  font-weight: 650;
+  font-size: 13px;
+}
+
+.details {
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(17, 24, 39, 0.10);
+  background: rgba(255, 255, 255, 0.75);
+  color: var(--op-text-muted);
+  font-weight: 650;
+  font-size: 12px;
+}
+
+.actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.spinner {
+  height: 18px;
+  width: 18px;
+  border-radius: 999px;
+  border: 2px solid rgba(37, 99, 235, 0.22);
+  border-top-color: rgba(37, 99, 235, 0.95);
+  animation: spin 900ms linear infinite;
+}
+
+.emptyMark {
+  font-weight: 1000;
+  color: rgba(37, 99, 235, 0.85);
+}
+
+.errorMark {
+  font-weight: 1000;
+  color: rgba(239, 68, 68, 0.92);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -5,6 +5,7 @@ import Button from "../components/ui/Button";
 import { dataService } from "../services";
 import { logger } from "../config";
 import styles from "./AnalyticsPage.module.css";
+import { ErrorState, LoadingState } from "../components/ui/States";
 
 /**
  * @typedef {{ key: string, label: string }} RegionOption
@@ -479,24 +480,16 @@ export default function AnalyticsPage() {
           </div>
 
           {error ? (
-            <div className={styles.errorBox} style={{ marginTop: 14 }}>
-              <div style={{ fontWeight: 900 }}>Could not load analytics</div>
-              <div className={styles.smallMuted} style={{ marginTop: 6 }}>
-                {error.message}
-              </div>
-              <div style={{ marginTop: 12 }}>
-                <Button variant="primary" size="sm" onClick={refresh}>
-                  Retry
-                </Button>
-              </div>
-            </div>
+            <ErrorState
+              title="Could not load analytics"
+              message="We couldn’t fetch analytics summary / route progress."
+              details={error.message}
+              onAction={refresh}
+              actionLabel="Retry"
+              inline
+            />
           ) : loading && !summary ? (
-            <div className={styles.placeholderBox} style={{ marginTop: 14 }}>
-              <div style={{ fontWeight: 900 }}>Loading…</div>
-              <div className={styles.smallMuted} style={{ marginTop: 6 }}>
-                Fetching analytics summary and route progress.
-              </div>
-            </div>
+            <LoadingState title="Loading…" message="Fetching analytics summary and route progress." inline />
           ) : null}
         </div>
       </Card>
